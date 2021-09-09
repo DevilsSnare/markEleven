@@ -1,8 +1,61 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
+import confetti from 'canvas-confetti';
 
 function App() {
+
+  function showConfetti() {
+    confetti({
+      particleCount: 200,
+      startVelocity: 60,
+      spread: 360,
+      origin: {x:0,y:0}
+    });
+    confetti({
+      particleCount: 200,
+      startVelocity: 60,
+      spread: 360,
+      origin: {x:1,y:1}
+    });
+    confetti({
+      particleCount: 200,
+      startVelocity: 60,
+      spread: 360,
+      origin: {x:1,y:0}
+    });
+    confetti({
+      particleCount: 200,
+      startVelocity: 60,
+      spread: 360,
+      origin: {x:0,y:1}
+    });
+    // let i=5;
+    // while(i--) {
+    //   confetti({
+    //     particleCount: 100,
+    //     startVelocity: 20,
+    //     spread: 360,
+    //     origin: {
+    //       x: Math.random(),
+    //       // since they fall down, start a bit higher than random
+    //       y: Math.random() - 0.2
+    //     }
+    //   });
+    // }    
+  }
+
+  //modal box
+  window.onload = () =>{
+    let modal = document.querySelector(".modal");
+    modal.style.display="block";
+  }
+  function closeModalBox() {
+    let modal = document.querySelector(".modal");
+    modal.style.display="none";
+  }
+
+  //main program
   const [result, setResult] = useState("");
   function digitsSum(date) {
     let sum=0;
@@ -23,6 +76,7 @@ function App() {
       const sum=digitsSum(userDate);
       if(sum%userNum == 0) {
         setResult("woohoo! "+ userNum + " is your lucky number!");
+        showConfetti();
       } else {
         setResult("sorry! "+ userNum + " is not your lucky number!");
       }
@@ -30,7 +84,13 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App" onClick={()=>closeModalBox()}>
+      <div className="modal">
+        <div className="close-modal">
+          <span className="close-button" onClick={()=>closeModalBox()}>&times;</span>
+          <p>We don't store your data, PERIOD!</p>
+        </div>
+      </div>
       <nav>B'Day</nav>
       <div className="main">
         <div className="name">date of birth</div>
